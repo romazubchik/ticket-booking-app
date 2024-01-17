@@ -1,45 +1,79 @@
-import "./App.css";
-import Transfers from "./components/Transfers";
-import FilterButtons from "./components/FilterButtons";
-import FlightDetails from "./components/FlightCard";
-import styled from "styled-components";
-import { createGlobalStyle } from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
+import Transfers from './components/Transfers.jsx';
+import FilterButtons from './components/FilterButtons.jsx';
+import TicketList from './components/TicketList.jsx';
 
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
     background-color: #f3f7fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: Arial, sans-serif;
   }
+`;
+
+const AppContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  padding-top: 50px;
 `;
 
 const HorizontalContainer = styled.div`
   display: flex;
-  align-items: center; 
+  align-items: flex-start;
 `;
 
 const VerticalContainer = styled.div`
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  margin: 20px;
 `;
-
 function App() {
+  const [searchId, setSearchId] = useState(null);
+  const [filter, setFilter] = useState('cheapest');
+  const [transfersFilter, setTransfersFilter] = useState([]);
+
+  useEffect(() => {
+    const fetchSearchId = async () => {
+      try {
+        const response = await fetch('http://localhost:3002/search');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setSearchId(data.searchId);
+      } catch (error) {
+        console.error('Помилка при отриманні searchId:', error);
+      }
+    };
+
+    fetchSearchId();
+  }, []);
+
+  const handleFilterChange = (selectedFilter) => {
+    setFilter(selectedFilter);
+  };
+
+  const handleTransfersFilterChange = (selectedTransfers) => {
+    setTransfersFilter(selectedTransfers);
+  };
+
   return (
-    <div className="App">
+    <>
       <GlobalStyle />
-      <HorizontalContainer>
-        <Transfers />
-        <VerticalContainer>
-          <FilterButtons />
-          <FlightDetails />
-        </VerticalContainer>
-      </HorizontalContainer>
-    </div>
+      <AppContainer>
+        <HorizontalContainer>
+          <Transfers onFilterChange={handleTransfersFilterChange} />
+          <VerticalContainer>
+            <FilterButtons selectedFilter={filter} onSelectFilter={handleFilterChange} />
+            {searchId ? <TicketList searchId={searchId} filter={filter} transfersFilter={transfersFilter} /> : <p>Завантаження...</p>}
+          </VerticalContainer>
+        </HorizontalContainer>
+      </AppContainer>
+    </>
   );
 }
 

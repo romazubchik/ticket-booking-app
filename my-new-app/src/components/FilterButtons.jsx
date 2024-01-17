@@ -1,23 +1,27 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import styled from 'styled-components';
 
 const FilterButton = styled(Button)`
-  background-color: #2196f3;
-  color: white;
+  background-color: ${(props) => (props.selected ? '#1976d2' : 'white')};
+  color: ${(props) => (props.selected ? 'white' : '#1976d2')};
+  padding: 6px 20px;
+  margin: 0 5px;
   &:hover {
-    background-color: #1976d2;
+    background-color: ${(props) => (props.selected ? '#1976d2' : '#e3e3e3')};
   }
   &.Mui-disabled {
-    color: white;
-    background-color: #bbdefb;
+    color: #bbdefb;
+    background-color: white;
   }
+  font-weight: bold;
+  text-transform: none;
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
-  justify-content: space-around;
-  margin: 8px 0;
+  justify-content: center;
+  gap: 10px;
 `;
 
 const FilterButtons = ({ selectedFilter, onSelectFilter }) => {
@@ -25,14 +29,14 @@ const FilterButtons = ({ selectedFilter, onSelectFilter }) => {
     <ButtonGroup>
       <FilterButton
         variant="contained"
-        disabled={selectedFilter === 'cheapest'}
+        selected={selectedFilter === 'cheapest'}
         onClick={() => onSelectFilter('cheapest')}
       >
         Самый дешевый
       </FilterButton>
       <FilterButton
         variant="contained"
-        disabled={selectedFilter === 'fastest'}
+        selected={selectedFilter === 'fastest'}
         onClick={() => onSelectFilter('fastest')}
       >
         Самый быстрый
