@@ -8,8 +8,10 @@ const CustomFormLabel = styled(FormLabel)`
 
 const CustomFormControl = styled(FormControl)`
   margin: 16px;
-  width: 230px;
-  height: 250px;
+  padding: 17px; 
+  width: 235px;
+  height: 255px;
+  background-color: #fff; 
 `;
 
 const Transfers = () => {
@@ -36,9 +38,8 @@ const Transfers = () => {
     } else {
       const newState = { ...state, [name]: checked };
 
-      // Check if all the individual checkboxes are selected
       const allSelected = ['none', 'one', 'two', 'three'].every(item => newState[item]);
-      newState.all = allSelected; // Update the state of 'all' based on other checkboxes
+      newState.all = allSelected; 
 
       setState(newState);
     }

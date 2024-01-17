@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
-// Define styled components
 const FilterButton = styled(Button)`
   background-color: #2196f3;
   color: white;
@@ -21,7 +20,6 @@ const ButtonGroup = styled.div`
   margin: 8px 0;
 `;
 
-// The component
 const FilterButtons = ({ selectedFilter, onSelectFilter }) => {
   return (
     <ButtonGroup>

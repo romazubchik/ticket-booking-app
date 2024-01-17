@@ -4,7 +4,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import styled from 'styled-components';
 
-// Styled components
 const PriceTag = styled(Typography)`
   color: #4caf50;
   font-size: 2rem;
@@ -28,7 +27,6 @@ const FlightInfo = styled(Typography)`
   }
 `;
 
-// FlightDetails component
 const FlightDetails = ({ flightData }) => {
   return (
     <FlightCard>
@@ -50,7 +48,6 @@ const FlightDetails = ({ flightData }) => {
 
 export default FlightDetails;
 
-// Usage example (you should include this in the parent component where you want to render the FlightDetails component):
 /*
 const flightDataExample = {
   price:'13 400',
@@ -61,6 +58,5 @@ stops: 2,
 stopLocations: ['HKG', 'JNB'],
 };
 
-// In your parent component's render method or return statement
 <FlightDetails flightData={flightDataExample} />
 */
