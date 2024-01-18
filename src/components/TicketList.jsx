@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import FlightDetails from './FlightCard.jsx';
+import FlightDetails from './FlightDetails.jsx';
+import { getTickets } from '../api.js';
 
 const TicketList = ({ searchId, filter, transfersFilter }) => {
   const [tickets, setTickets] = useState([]);
@@ -12,15 +13,8 @@ const TicketList = ({ searchId, filter, transfersFilter }) => {
       }
 
       try {
-        const response = await fetch(`http://localhost:3002/tickets?searchId=${searchId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-
-        if (data.tickets) {
-          setTickets(data.tickets);
-        }
+        const ticketsData = await getTickets(searchId);
+        setTickets(ticketsData);
       } catch (error) {
         console.error('Помилка при отриманні квитків:', error);
       }

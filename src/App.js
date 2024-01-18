@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import Transfers from './components/Transfers.jsx';
-import FilterButtons from './components/FilterButtons.jsx';
-import TicketList from './components/TicketList.jsx';
+import { FilterButtons, TicketList, Transfers } from './components/index.js';
+import { theme } from './styles/theme.js';
+import { getSearchId } from './api.js';
 
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    background-color: #f3f7fa;
+    background-color: ${theme.colors.pageBackground};
     font-family: Arial, sans-serif;
   }
 `;
@@ -29,36 +29,52 @@ const HorizontalContainer = styled.div`
 const VerticalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  margin: ${theme.sizes.medium};
 `;
+
+const SortFilterMessage = styled.p`
+  font-size: ${theme.sizes.sortFilterMessageFontSize};
+  font-weight: bold;
+  text-align: center;
+  color: ${theme.colors.sortFilterMessageText};
+  background-color: ${theme.colors.sortFilterMessageBackground};
+  padding: ${theme.sizes.sortFilterMessagePadding};
+  border-radius: ${theme.sizes.sortFilterMessageBorderRadius};
+`;
+
 function App() {
   const [searchId, setSearchId] = useState(null);
   const [filter, setFilter] = useState('cheapest');
   const [transfersFilter, setTransfersFilter] = useState([]);
+  const [sortedOrFiltered, setSortedOrFiltered] = useState(false);
 
   useEffect(() => {
-    const fetchSearchId = async () => {
+    const fetchSearchIdData = async () => {
       try {
-        const response = await fetch('http://localhost:3002/search');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setSearchId(data.searchId);
+        const searchId = await getSearchId();
+        setSearchId(searchId);
       } catch (error) {
         console.error('Помилка при отриманні searchId:', error);
       }
     };
 
-    fetchSearchId();
+    fetchSearchIdData();
   }, []);
 
   const handleFilterChange = (selectedFilter) => {
     setFilter(selectedFilter);
+    setSortedOrFiltered(true);
+    setTimeout(() => {
+      setSortedOrFiltered(false);
+    }, 2000);
   };
 
   const handleTransfersFilterChange = (selectedTransfers) => {
     setTransfersFilter(selectedTransfers);
+    setSortedOrFiltered(true);
+    setTimeout(() => {
+      setSortedOrFiltered(false);
+    }, 1000);
   };
 
   return (
@@ -69,7 +85,12 @@ function App() {
           <Transfers onFilterChange={handleTransfersFilterChange} />
           <VerticalContainer>
             <FilterButtons selectedFilter={filter} onSelectFilter={handleFilterChange} />
-            {searchId ? <TicketList searchId={searchId} filter={filter} transfersFilter={transfersFilter} /> : <p>Завантаження...</p>}
+            {sortedOrFiltered && <SortFilterMessage>Отфильтровано</SortFilterMessage>}
+            {searchId ? (
+              <TicketList searchId={searchId} filter={filter} transfersFilter={transfersFilter} />
+            ) : (
+              <p>Завантаження...</p>
+            )}
           </VerticalContainer>
         </HorizontalContainer>
       </AppContainer>

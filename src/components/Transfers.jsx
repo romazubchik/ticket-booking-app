@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel } from '@material-ui/core';
 import styled from 'styled-components';
+import { theme } from '../styles/theme.js';
 
 const CustomFormLabel = styled(FormLabel)`
   font-weight: bold;
-  margin: 8px;
+  margin: ${theme.sizes.medium};
 `;
 
 const CustomFormControl = styled(FormControl)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 240px;
-  height: 260px;
-  background-color: #fff;
-  padding: 16px;
+  width: ${theme.sizes.customFormControlWidth};
+  height: ${theme.sizes.customFormControlHeight};
+  background-color: ${theme.colors.formControlBackground};
+  padding: ${theme.sizes.medium};
+  box-shadow: ${theme.colors.formControlBoxShadow};
+  border: ${theme.colors.formControlBorder};
+  border-radius: ${theme.sizes.customFormControlBorderRadius};
+
+  @media ${theme.mediaQueries.mobile} {
+    width: ${theme.sizes.customFormControlMobileWidth};
+  }
 `;
 
 const Transfers = ({ onFilterChange }) => {
@@ -27,12 +35,18 @@ const Transfers = ({ onFilterChange }) => {
     if (name === 'all') {
       newSelectedFilters = checked ? ['all', 'none', 'one', 'two', 'three'] : [];
     } else {
-      newSelectedFilters = checked
-        ? [...selectedFilters.filter(f => f !== 'all'), name]
-        : selectedFilters.filter(filter => filter !== name);
+      if (checked) {
+        newSelectedFilters = [...selectedFilters.filter(f => f !== 'all'), name];
+      } else {
+        newSelectedFilters = selectedFilters.filter(filter => filter !== name);
+      }
 
       if (newSelectedFilters.length === 0 || newSelectedFilters.length === 4) {
         newSelectedFilters = ['all', 'none', 'one', 'two', 'three'];
+      }
+
+      if (newSelectedFilters.includes('all') && !checked) {
+        newSelectedFilters = newSelectedFilters.filter(f => f !== 'all');
       }
     }
 

@@ -1,11 +1,16 @@
 const express = require('express');
-const mockTickets = require('./mockTickets');
+const mockTickets = require('./mockTickets.cjs');
+const cors = require('cors');
 
 const app = express();
 const PORT = 3002;
 
 app.use(express.json());
 
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 
 app.get('/search', (req, res) => {
   res.json({ searchId: mockTickets.searchId });
@@ -53,14 +58,6 @@ app.get('/', (req, res) => {
 
 app.get('/simulate-error', (req, res) => {
   res.status(500).send('An error has occurred');
-});
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
 });
 
 app.listen(PORT, () => {

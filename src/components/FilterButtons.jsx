@@ -1,18 +1,19 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
+import { theme } from '../styles/theme.js';
 
 const FilterButton = styled(Button)`
-  background-color: ${(props) => (props.selected ? '#1976d2' : 'white')};
-  color: ${(props) => (props.selected ? 'white' : '#1976d2')};
-  padding: 6px 20px;
+  background-color: ${(props) => (props.selected ? theme.colors.primary : theme.colors.background)};
+  color: ${(props) => (props.selected ? theme.colors.background : theme.colors.primary)};
+  padding: ${theme.sizes.buttonPaddingY} ${theme.sizes.buttonPaddingX};
   margin: 0 5px;
   &:hover {
-    background-color: ${(props) => (props.selected ? '#1976d2' : '#e3e3e3')};
+    background-color: ${(props) => (props.selected ? theme.colors.primary : theme.colors.background)};
   }
   &.Mui-disabled {
-    color: #bbdefb;
-    background-color: white;
+    color: ${theme.colors.secondary};
+    background-color: ${theme.colors.background};
   }
   font-weight: bold;
   text-transform: none;

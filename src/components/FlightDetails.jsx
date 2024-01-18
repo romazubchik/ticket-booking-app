@@ -3,36 +3,38 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import styled from 'styled-components';
-import logo from '../images/S7_new_logo.svg.png';
+import { theme } from '../styles/theme.js';
+
+const logoUrlAir = process.env.PUBLIC_URL + "/logo.png";
 
 const PriceTag = styled(Typography)`
-  color: #4caf50;
+  color: ${theme.colors.success};
   font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: ${theme.sizes.medium};
 `;
 
 const FlightCard = styled(Card)`
-  width: 400px;
-  margin: 16px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  width: ${theme.sizes.flightCardWidth};
+  margin: ${theme.sizes.medium};
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `;
 
 const FlightInfo = styled(Typography)`
   &.MuiTypography-body1 {
     font-size: 1rem;
-    margin-bottom: 4px;
+    margin-bottom: ${theme.sizes.small};
   }
 
   &.MuiTypography-body2 {
     font-size: 0.875rem;
-    color: #757575;
-    margin-bottom: 4px;
+    color: ${theme.colors.mutedText};
+    margin-bottom: ${theme.sizes.small};
   }
 `;
 
 const FlightSegment = styled.div`
-  margin-bottom: 16px;
+  margin-bottom: ${theme.sizes.medium};
 
   &:last-child {
     margin-bottom: 0;
@@ -40,7 +42,7 @@ const FlightSegment = styled.div`
 `;
 
 const AirlineLogo = styled.img`
-  height: 20px;
+  height: ${theme.sizes.logoHeight};
   float: right;
 `;
 
@@ -74,7 +76,7 @@ const FlightDetails = ({ flightData }) => {
     <FlightCard>
       <CardContent>
         <PriceTag>{flightData.price} ₽</PriceTag>
-        <AirlineLogo src={logo} alt={`${flightData.carrier} Logo`} />
+        <AirlineLogo src={logoUrlAir} alt={`${flightData.carrier} Logo`} />
         {flightData.segments.map(renderSegment)}
       </CardContent>
     </FlightCard>
