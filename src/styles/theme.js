@@ -9,9 +9,9 @@ export const theme = {
       mutedText: '#757575',
       sortFilterMessageText: '#4caf50',
       sortFilterMessageBackground: '#e8f5e9',
-      formControlBackground: '#fff', // Новий колір для CustomFormControl
-      formControlBoxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)', // Новий колір для CustomFormControl
-      formControlBorder: '1px solid #2ecc71', // Новий колір для CustomFormControl
+      formControlBackground: '#fff', 
+      formControlBoxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)', 
+      formControlBorder: '1px solid #2ecc71', 
     },
     sizes: {
       small: '8px',
@@ -24,9 +24,9 @@ export const theme = {
       sortFilterMessageFontSize: '14px',
       sortFilterMessagePadding: '8px',
       sortFilterMessageBorderRadius: '4px',
-      customFormControlWidth: '240px', // Новий розмір для CustomFormControl
-      customFormControlHeight: '260px', // Новий розмір для CustomFormControl
-      customFormControlMobileWidth: '100%', // Новий розмір для CustomFormControl на мобільних екранах
+      customFormControlWidth: '240px', 
+      customFormControlHeight: '260px', 
+      customFormControlMobileWidth: '100%', 
     },
     mediaQueries: {
       mobile: 'screen and (max-width: 768px)',

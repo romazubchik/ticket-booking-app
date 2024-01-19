@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel } from '@material-ui/core';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel } from '@mui/material'; // Замінено import
 import styled from 'styled-components';
 import { theme } from '../styles/theme.js';
 
